@@ -1,6 +1,14 @@
 const url = require("url");
 const errors = require("./errors");
 
+let requireTypeTable = {
+    'string': typeof(""),
+    'number': typeof(1),
+    'bool': typeof(true),
+    'object': typeof({}),
+    'array': typeof([])
+}
+
 const PostMethodHandler = (req, res, arr) => {
     arr.map(([path, fn]) => {
         const { pathname } = url.parse(req.url);
@@ -22,9 +30,6 @@ const PostMethodHandler = (req, res, arr) => {
 
             const size = parseInt(req.headers['content-length'], 10);
             const buffer = Buffer.allocUnsafe(size);
-
-            console.log('size', size);
-            console.log('buffer', buffer);
 
             let getBodyData = () => {
                 return new Promise((resolve, reject) => {
@@ -73,6 +78,22 @@ const PostMethodHandler = (req, res, arr) => {
                         if (rejected) {
                             res_callback.status(400).send(`bad_request -> ${rejected_values.map(rejected_value => `${rejected_value} is null -> `)}`)
                         }
+                    },
+
+                    requireType: (_arr) => {
+                        let rejected_values = [];
+                        let rejected = false;
+                        _arr.map(([_parameter, type]) => {
+                            let required_type = requireTypeTable[type];
+                            if (typeof(data[_parameter]) != required_type) {
+                                rejected_values.push([_parameter, required_type, data[_parameter]]);
+                                rejected = true;
+                            }
+                        });
+                        
+                        if (rejected) {
+                            res_callback.status(400).send(`bad_request -> ${rejected_values.map(rejected_value => ` type of ${rejected_value[0]} is ${typeof(rejected_value[2])} but expected ${rejected_value[1]} -> `)}`)
+                        }
                     }
                 }
 
@@ -104,7 +125,7 @@ const GetMethodHandler = (req, res, arr) => {
 
             let req_callback = {
                 headers: req.headers,
-                
+
                 requireHeader: (_arr) => {
                     let rejected_values = [];
                     let rejected = false;

@@ -76,6 +76,26 @@
 
 ## <br>
 
+- 🧶 Use <strong>requiredType</strong> body param in POST method
+
+```js
+    app.post("/test_requireType", (req, res) => {
+        const param_x = req.body['param-x'];
+        req.require(["param-x"]);
+        req.requireType([
+            ["param-x", "string"] // param_x must be a string
+        ]);
+
+        res.status(200).send({ param_x });
+    });
+```
+- 🍄 Options are: `string`, `number`, `bool`, `object`, `array`
+
+- 👉 if someone requiredtype body param is different to be expected ->
+<img src="https://i.imgur.com/I5goUe5.png" width="800rem" >
+
+## <br>
+
 - 🧶 Start Server
 ```js
     app.listen(_port, callback);

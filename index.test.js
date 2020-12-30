@@ -18,6 +18,16 @@ app.post("/test_post", (req, res) => {
     res.status(200).send({ param_x });
 });
 
+app.post("/test_requireType", (req, res) => {
+    const param_x = req.body['param-x'];
+    req.require(["param-x"]);
+    req.requireType([
+        ["param-x", "string"] // param_x must be a string
+    ]);
+
+    res.status(200).send({ param_x });
+});
+
 app.post("/test_post_required", (req, res) => {
     const param_x = req.body['param-x'];
     const param_y = req.body['param-y'];
