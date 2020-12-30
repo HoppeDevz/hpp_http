@@ -43,7 +43,7 @@
 ```
 ## <br>
 
-- 🧶 Use <strong>required</strong> param in post method
+- 🧶 Use <strong>required</strong> param in POST method
 
 ```js
     app.post("/test_post_required", (req, res) => {
@@ -57,6 +57,22 @@
 
 - 👉 if someone required param is null ->
 <img src="https://i.imgur.com/OJfdnxy.png" width="800rem" >
+
+## <br>
+
+- 🧶 Use <strong>required</strong> header param in GET method
+
+```js
+    app.get("/test_require_header", (req, res) => {
+        console.log(req.headers);
+        const header_x = req.headers['header-x'];
+        req.requireHeader(['header-x']);
+        res.status(200).send({ header_x });
+    });
+```
+
+- 👉 if someone required header param is null ->
+<img src="https://i.imgur.com/f4x8zwg.png" width="800rem" >
 
 ## <br>
 
