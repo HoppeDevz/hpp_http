@@ -64,7 +64,21 @@ module.exports = {
                 getBodyData().then(data => {
                     let req_callback = {
                         headers: req.headers,
-                        body: data
+                        body: data,
+                        require: (_arr) => {
+                            let rejected_values = [];
+                            let rejected = false;
+                            _arr.map(_parameter => {
+                                if (!data[_parameter] && data[_parameter] != 0) {
+                                    rejected_values.push(_parameter);
+                                    rejected = true;
+                                }
+                            })
+
+                            if (rejected) {
+                                res_callback.status(400).send(`bad_request -> ${rejected_values.map(rejected_value => `${rejected_value} is null -> `)}`)
+                            }
+                        }
                     }
     
                     fn(req_callback, res_callback);

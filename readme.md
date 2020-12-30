@@ -43,6 +43,23 @@
 ```
 ## <br>
 
+- 🧶 Use <strong>required</strong> param in post method
+
+```js
+    app.post("/test_post_required", (req, res) => {
+        const param_x = req.body['param-x'];
+        const param_y = req.body['param-y'];
+        const param_z = req.body['param-z'];
+        req.require(['param-x', 'param-y', 'param-z']);
+        res.status(200).send({ param_x, param_y, param_z });
+    });
+```
+
+- 👉 if someone required param is null ->
+<img src="https://i.imgur.com/OJfdnxy.png" >
+
+## <br>
+
 - 🧶 Start Server
 ```js
     app.listen(_port, callback);
