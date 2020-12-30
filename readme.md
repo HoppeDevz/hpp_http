@@ -39,7 +39,7 @@
 - 🧶 Use JSON Content-Type or your custom Content-Type
 ```js
     app.use(hpp_http.hppJson);
-    app.use(hpp_http.hppCustomContentTyp("your-custom-Content-Type"))
+    app.use(hpp_http.hppCustomContentType("your-custom-Content-Type"))
 ```
 ## <br>
 
@@ -56,7 +56,7 @@
 ```
 
 - 👉 if someone required param is null ->
-<img src="https://i.imgur.com/OJfdnxy.png" >
+<img src="https://i.imgur.com/OJfdnxy.png" width="800rem" >
 
 ## <br>
 
